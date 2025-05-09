@@ -5,23 +5,22 @@ solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
 
+import csv
+import os
 
 def pregunta_07():
-    """
-    Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla
-    contiene un valor posible de la columna 2 y una lista con todas las letras
-    asociadas (columna 1) a dicho valor de la columna 2.
+    agrupado = {}
+    ruta = os.path.join(os.path.dirname(__file__), '..', 'files', 'input', 'data.csv')
 
-    Rta/
-    [(0, ['C']),
-     (1, ['E', 'B', 'E']),
-     (2, ['A', 'E']),
-     (3, ['A', 'B', 'D', 'E', 'E', 'D']),
-     (4, ['E', 'B']),
-     (5, ['B', 'C', 'D', 'D', 'E', 'E', 'E']),
-     (6, ['C', 'E', 'A', 'B']),
-     (7, ['A', 'C', 'E', 'D']),
-     (8, ['E', 'D', 'E', 'A', 'B']),
-     (9, ['A', 'B', 'E', 'A', 'A', 'C'])]
+    with open(ruta, newline='', encoding='utf-8') as archivo:
+        lector = csv.reader(archivo, delimiter='\t')
+        for fila in lector:
+            numero = int(fila[1])
+            letra = fila[0]
+            if numero in agrupado:
+                agrupado[numero].append(letra)
+            else:
+                agrupado[numero] = [letra]
 
-    """
+    resultado = sorted(agrupado.items())
+    return resultado
